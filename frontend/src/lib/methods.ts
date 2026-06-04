@@ -20,7 +20,7 @@ export async function getSession() : Promise< any >{
     } catch (error) {
         return UsurioMockup[0]
     }
-}
+};
 
 export async function CreateUser({ nome, email, senha, nascimento } : Usuario ) : Promise<Usuario | any>{
     try {
@@ -49,7 +49,7 @@ export async function CreateUser({ nome, email, senha, nascimento } : Usuario ) 
             }
         }
     }
-}
+};
 
 export async function Login({ email, senha } : { email: string, senha : string }){
     try {
@@ -75,7 +75,7 @@ export async function Login({ email, senha } : { email: string, senha : string }
     }
 }
 
-export async function ListarCursos({ filtro } : { filtro?: string }){
+export async function ListarCursos({ filtro } : { filtro?: string }) {
     try{
         const result = await request( router["listar-cursos"]( filtro ));
 
@@ -84,8 +84,13 @@ export async function ListarCursos({ filtro } : { filtro?: string }){
         }
 
         return result
+    } catch (error) {
+        return {
+            statusCode: 400,
+            error: "Erro ao listar cursos"
+        }
     }
-}
+};
 
 export async function Inscricao({ idCurso } : { idCurso : string }){
     const status_code : number = 400;
