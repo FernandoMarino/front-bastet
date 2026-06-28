@@ -12,14 +12,23 @@ const Curso = sequelize.define(
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
+
+      set(value) {
+        this.setDataValue('nome', value.trim());
+      }
     },
     descricao: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ativo: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+    
+    status_id: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
+    capa: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     data_inicio: {
       type: DataTypes.DATE,

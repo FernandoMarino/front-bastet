@@ -1,59 +1,42 @@
 import sequelize from '../config/database.js';
 import Role from './Role.js';
 import User from './user.js';
-import Course from './Curso.js';
+import Curso from './Curso.js';
+import CursoStatus from './CursoStatus.js';
+import MatriculaStatus from './MatriculaStatus.js';
+import Matricula from './Matricula.js';
 
-// Definir associações entre os modelos
 
-/* 
-=========================================================
-1 - Relacionamento entre User e Role (papel do usuário)
-============================================================
-*/
+// Definir o relacionamento entre User e Role (N:N)
+// através da tabela de junção "user_roles"
+User.belongsToMany(Role, { through: 'user_roles', foreignKey: 'user_id' });
+Role.belongsToMany(User, { through: 'user_roles', foreignKey: 'role_id' });
 
-// Cada usuário contém um papel (aluno, professor, admin)
-User.belongsTo(Role, {
-  // O nome do campo de chave estrangeira na tabela de usuários
-  foreignKey: 'role_id',
+// Definir o relacionamento entre User e Course (N:N) 
+// através da tabela de Matricula
+User.belongsToMany(Curso, { through: Matricula, as:'cursos_matriculados', foreignKey: 'aluno_id', otherKey: 'curso_id' });
+Curso.belongsToMany(User, { through: Matricula, as: 'alunos', foreignKey: 'curso_id', otherKey: 'aluno_id' });
 
-  // O campo na tabela de papéis que é referenciado pela chave estrangeira
-  targetKey: 'id',
-});
+// Definir o relacionamento entre User e Course (N:N)
+// através da tabela de junção "curso_professores"
+Curso.belongsToMany(User, { through: 'curso_professores' , foreignKey: 'curso_id' });
+User.belongsToMany(Curso, { through: 'curso_professores', foreignKey: 'instrutor_id' });
 
-// Cada papel pode ter multiplos usuários associados a ele
-Role.hasMany(User, {
-  // O nome do campo de chave estrangeira na tabela de usuários
-  foreignKey: 'role_id',
-  // O campo na tabela de papéis que é referenciado pela chave estrangeira
-  sourceKey: 'id',
-});
+// Definir o relacionamento entre Curso e CursoStatus (1:N)
+// Cada curso pertence a um status, e cada status pode ser atribuído a vários cursos
+CursoStatus.hasMany(Curso, { foreignKey: 'status_id' });
+Curso.belongsTo(CursoStatus, { foreignKey: 'status_id' });
 
-/* 
-=========================================================
-2 - Relacionamento entre Curso e Professor (Muitos para Um)
-============================================================
-*/
+// Definir o relacionamento entre Matricula e MatriculaStatus (1:N)
+// Cada matrícula possui um status, e cada status pode ser atribuído a várias matrículas
+MatriculaStatus.hasMany(Matricula, { foreignKey: 'status_id' });
+Matricula.belongsTo(MatriculaStatus, { foreignKey: 'status_id' });
 
-// Cada curso é ministrado por um professor (User)
-Course.belongsTo(User, {
+// Definir o relacionamento entre Curso e Matricula (1:N)
+// Matricula sendo a tabela de alunos inscritos em um curso
+Curso.hasMany(Matricula, { foreignKey: 'curso_id', as: 'inscritos' });
+Matricula.belongsTo(Curso, { foreignKey: 'curso_id' });
 
-    // O nome do campo de chave estrangeira na tabela de cursos
-    as: 'professor', 
 
-    // O campo na tabela de usuários que é referenciado pela chave estrangeira
-    foreignKey: 'professor_id', 
 
-    // O campo na tabela de usuários que é referenciado pela chave estrangeira
-    targetKey: 'id' 
-});
-
-// Cada professor pode ministrar vários cursos
-User.hasMany(Course, { as: 'cursosMinistrados', foreignKey: 'professor_id', sourceKey: 'id' });
-
-/* 
-=========================================================
-3 - Relacionamento entre Curso e Aluno (Muitos para Muitos)
-============================================================
-*/
-
-export { sequelize, Role, User, Course };
+export { sequelize, Role, User, Curso, CursoStatus, MatriculaStatus, Matricula };
