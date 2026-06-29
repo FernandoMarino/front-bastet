@@ -10,10 +10,11 @@ export default async function bootstrap() {
         console.log('Conexão com o banco de dados estabelecida com sucesso');
 
         if (process.env.NODE_ENV === 'production') {
-            dbSyncMode = { alter: true }; // Em produção, apenas altera o banco sem apagar dados
+            
+            const dbSyncMode = { alter: true }; // Em produção, apenas altera o banco sem apagar dados
             await sequelize.sync(dbSyncMode);
         } else {
-            dbSyncMode = { force: true }; // Em desenvolvimento, força a sincronização (apaga e recria tabelas)
+            const dbSyncMode = { force: true }; // Em desenvolvimento, força a sincronização (apaga e recria tabelas)
 
             await sequelize.query('SET FOREIGN_KEY_CHECKS = 0;');
             await sequelize.sync(dbSyncMode);
