@@ -1,6 +1,6 @@
 import sequelize from '../config/database.js';
 import Role from './Role.js';
-import User from './user.js';
+import User from './User.js';
 import Curso from './Curso.js';
 import CursoStatus from './CursoStatus.js';
 import MatriculaStatus from './MatriculaStatus.js';
