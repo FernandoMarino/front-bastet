@@ -5,8 +5,6 @@ import { CreateUserFormData } from '@/app/types/CreateUserFormData';
 import axios from 'axios';
 import { CreateUserResponse } from '../types/User';
 
-
-
 export async function createUserRequest(validatedFormData: CreateUserFormData) {
     console.log('userServices.ts - Create User Request - Start');
 
@@ -25,4 +23,3 @@ export async function createUserRequest(validatedFormData: CreateUserFormData) {
         throw error;
     }
 }
-
