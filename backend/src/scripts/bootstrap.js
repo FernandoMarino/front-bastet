@@ -9,7 +9,7 @@ export default async function bootstrap() {
         await sequelize.authenticate();
         console.log('Conexão com o banco de dados estabelecida com sucesso');
 
-        if (process.env.DB_BASTET_NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'production') {
             dbSyncMode = { alter: true }; // Em produção, apenas altera o banco sem apagar dados
             await sequelize.sync(dbSyncMode);
         } else {
