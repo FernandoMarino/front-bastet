@@ -44,7 +44,7 @@ app.use((err, req, res, next) => {
 });
 
 bootstrap().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor express rodando na porta ${PORT}`);
   })
 });
