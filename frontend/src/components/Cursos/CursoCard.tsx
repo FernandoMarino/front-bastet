@@ -36,7 +36,7 @@ export default function CursoCard({ curso }: CursoCardProps) {
         } else {
             setIsInscrito(curso.inscrito);
         }
-    }, [curso.inscrito]);
+    }, [curso.inscrito, isAuthenticated]);
 
     useEffect(() => {
         setInscritos(curso.inscricoes);
