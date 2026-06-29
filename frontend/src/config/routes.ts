@@ -1,4 +1,4 @@
-export default {
+const router = {
     'root': '#', //Rota da API
     'criar-usuario': () => '/usuarios', //url de criar usuários
     'login': () => '/login', //url de login
@@ -7,3 +7,4 @@ export default {
     'cancelar-curso': ( idCurso : string ) => `/cursos/${ idCurso }`, //url de cancelar inscricao
     'meus-cursos': ( idUsuario : string ) => `/${ idUsuario }`, //url de listar meus cursos
 }
+export default router;
