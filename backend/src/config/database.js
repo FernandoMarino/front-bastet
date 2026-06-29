@@ -3,12 +3,12 @@ import 'dotenv/config'
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
-    process.env.DB_BASTET_NAME,
-    process.env.DB_BASTET_USER,
-    process.env.DB_BASTET_PASS, 
+    process.env.MYSQLDATABASE,
+    process.env.MYSQLUSER,
+    process.env.MYSQLPASSWORD, 
     {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
+        host: process.env.MYSQLHOST,
+        port: process.env.MYSQLPORT,
         dialect: 'mariadb',
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
     }
