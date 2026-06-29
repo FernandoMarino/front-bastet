@@ -10,6 +10,9 @@ export async function buscarCursosService(userId) {
     console.log('User ID recebido no serviço: ', userId);
     const cursos = await buscarCursosAtivos(userId);
 
+
+    
+
     return cursos.map((curso) => ({
         id: curso.id,
         nome: curso.nome,
@@ -18,11 +21,13 @@ export async function buscarCursosService(userId) {
         data_inicio: curso.data_inicio,
         status_curso: curso.curso_status?.status,
         inscricoes: curso.inscritos.length,
+        
         // Verifica se o usuário está inscrito no curso, caso o userId seja fornecido
         inscrito: userId
             ? curso.inscritos.some((inscricao) => inscricao.aluno_id === userId)
             : false,
-        matricula_status: curso.inscritos?.matricula_status?.status, // Status da matrícula do usuário no curso
+        inscricao_cancelada: curso.inscritos.some((inscricao) => inscricao.aluno_id === userId && inscricao.matricula_status?.status === 'cancelada'),
+            
     }));
 }
 

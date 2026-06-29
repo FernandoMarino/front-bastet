@@ -1,4 +1,4 @@
-import CursosGrid from "@/components/Cursos/CursosPage";
+import CursosGrid from "@/components/Cursos/CursosGrid";
 
 
 

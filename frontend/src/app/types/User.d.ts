@@ -1,10 +1,8 @@
 export interface User {
-    id: string;
-    nome: string;
+    id: number;
     email: string;
+    nome: string;
     nome_usuario: string;
-    data_nascimento: string;
-    created_at: string;
 };
 
 export interface CreateUserResponse {

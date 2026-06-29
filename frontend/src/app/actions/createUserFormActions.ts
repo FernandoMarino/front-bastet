@@ -1,6 +1,5 @@
-'use server';
 
-import { createUserRequest, validateCreateUserFormData } from '../api/userServices';
+import { createUserRequest, validateCreateUserFormData } from '../api/usersRequests';
 import { CreateUserFormData } from '../types/CreateUserFormData';
 
 export async function createUserAction(

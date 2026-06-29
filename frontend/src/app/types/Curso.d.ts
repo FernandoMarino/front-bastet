@@ -1,10 +1,12 @@
 export interface Curso {
-  id: string;
+  id: number;
   nome: string;
   descricao: string;
   status: string;
   capa: string;
   data_inicio: Date;
   duracao: number;
-  total_inscritos: number;
+  inscricoes: number;
+  inscrito: boolean; 
+  inscricao_cancelada: boolean;
 }

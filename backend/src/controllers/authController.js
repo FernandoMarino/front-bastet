@@ -85,21 +85,25 @@ export class AuthenticationController {
         }
     }
 
+    // funcao para retornar os dados do usuario autenticado, recebe o token JWT, verifica se o usuario esta autenticado e retorna os informacoes do usuário
     static async me(req, res) {
-        const userIdRota = req.params.userId;
-        const userIdToken = req.user?.id;
+        const userIdToken = req.user?.id; // Obtém o usuário autenticado do middleware
 
-        if (userIdRota !== userIdToken) {
-            return res.status(403).json({
-                message: 'Acesso negado. Usuário não autenticado',
+        // Busca os cursos filtrados pelo usuário autenticado
+        const user = await findUserByIdService(userIdToken);
+
+        // Se o usuário não for encontrado, retorna um erro 404
+        if (!user) {
+            return res.status(404).json({
+                message: 'Usuário não encontrado',
             });
         }
 
-        const cursos = await buscarCursosFiltradosPorUsuarioService(userId);
-
         res.status(200).json({
-            message: 'Cursos listados com sucesso',
-            cursos,
+            id: user.id,
+            nome: user.nome,
+            nome_usuario: user.nome_usuario,
+            email: user.email,
         });
     }
 }

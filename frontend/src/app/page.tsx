@@ -1,13 +1,9 @@
-import CursosGrid from "../components/Cursos/CursosPage";
-
-
+import CursosGrid from '../components/Cursos/CursosGrid';
 
 export default function Page() {
-
-  
-  return (
-    <main>
-      <CursosGrid />
-    </main>
-  );
+    return (
+        <main>
+            <CursosGrid />
+        </main>
+    );
 }

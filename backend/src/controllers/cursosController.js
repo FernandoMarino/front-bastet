@@ -1,8 +1,11 @@
-import { buscarCursosService, buscarCursoPorIdService, buscarCursosFiltradosPorUsuarioService } from '../services/cursosServices.js';
+import {
+    buscarCursosService,
+    buscarCursoPorIdService,
+    buscarCursosFiltradosPorUsuarioService,
+} from '../services/cursosServices.js';
 
 export async function listarCursos(req, res) {
-
-    console.log(req.user)
+    console.log(req.user);
 
     const userId = req.user?.id; // Obtém o usuário autenticado do middleware
 
@@ -35,20 +38,26 @@ export async function buscarCursoPorIdController(req, res) {
 }
 
 export async function buscarCursosPorUsuariosController(req, res) {
-    const userId = req.user?.id; // Obtém o usuário autenticado do middleware
+    const userIdRota = req.params.idUsuario;
+    const userIdToken = req.user?.id; // Obtém o usuário autenticado do middleware
 
-    if (!userId) {
-        return res.status(401).json({
-            message: 'Usuário não autenticado',
+    // Verifica se o usuário autenticado é o mesmo que está tentando acessar os cursos
+    // Convertendo ambos para string para evitar problemas de tipo
+    if (String(userIdRota) !== String(userIdToken)) {
+        return res.status(403).json({
+            message: 'Acesso negado. Usuário não autorizado',
         });
     }
 
-    const cursos = await buscarCursosFiltradosPorUsuarioService(userId);
+    try {
+        const cursos = await buscarCursosFiltradosPorUsuarioService(userIdToken);
+        res.status(200).json(cursos);
 
-    res.status(200).json({
-        message: 'Cursos listados com sucesso',
-        cursos,
-    });
+    } catch (error) {
+        console.error('Erro ao buscar cursos por usuário:', error);
+        res.status(500).json({
+            message: 'Erro interno do servidor',
+        });
+    }
+
 }
-
-
