@@ -15,8 +15,7 @@ import { sequelize } from './src/models/index.js';
 
 // Configurar o servidor Express
 const app = express();
-const PORT = 3333;
-const hostname = 'localhost';
+const PORT = process.env.PORT || 3333;
 
 // Configurar o middleware express.json() para lidar com JSON
 app.use(express.json());
@@ -45,8 +44,8 @@ app.use((err, req, res, next) => {
 });
 
 bootstrap().then(() => {
-  app.listen(PORT, hostname, () => {
-    console.log(`Servidor express rodando em http://${hostname}:${PORT}`);
+  app.listen(PORT, () => {
+    console.log(`Servidor express rodando na porta ${PORT}`);
   })
 });
  
